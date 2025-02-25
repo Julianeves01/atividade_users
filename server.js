@@ -2,7 +2,7 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const userRoutes = require("./src/routes/userRoutes");
+const userRoutes = require ("./src/routes/usersRoutes");
 
 const app = express();
 
@@ -12,10 +12,12 @@ app.use("/api", userRoutes);
 
 const PORT = process.env.PORT || 4000;
 
+
+
 app.get("/", (req, res) => {
-    res.send("Eu amo BackEnd");
+res.send("Eu amo BackEnd");
 });
 
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+console.log(` 🎀 Servidor rodando na porta ${PORT}`);     
 });
