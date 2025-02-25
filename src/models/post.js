@@ -1,7 +1,8 @@
 const { v4: uuid4 } = require('uuid');
 class Post {
-    constructor(curtidas, comentarios, compartilhamentos, imagens) {
-        this.id = Date.now().toString();
+    constructor(idUser, curtidas, comentarios, compartilhamentos, imagens) {
+        this.id = uuid4();
+        this.idUser = idUser;
         this.curtidas = curtidas;
         this.comentarios = comentarios;
         this.compartilhamentos = compartilhamentos;

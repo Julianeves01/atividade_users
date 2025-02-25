@@ -7,26 +7,26 @@ class PostList {
         this.posts.push(post);
     }
 
-
     getAllPosts() {
         return this.posts;
     }
 
-    getPostById (id) {
+    getPostById(id) {
         const post = this.posts.find(post => post.id == id);
         if (!post) {
-            throw new Error('Post não encontrado!');
+            throw new Error("Post não encontrado");
         }
         return post;
     }
 
-    updatePost (id, updateData) {
+    updatePost(id, updatedData) {
         const post = this.getPostById(id);
         Object.assign(post, updateData);
         return post;
     }
-    deletePost (id) {
-        this.posts = this.posts.filter(post => post.id !== id);
+
+    deletePost(id) {
+        this.posts = this.posts.filter(post => post.id != id);
     }
 }
 
