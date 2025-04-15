@@ -7,7 +7,7 @@ const upload = require('../config/upload.js');
  * @swagger
  * tags:
  *   name: Users
- *   description: Gerenciamento de usuarios
+ *   description: Gerenciamento de usuários.
  */
 
 /**
@@ -18,7 +18,7 @@ const upload = require('../config/upload.js');
  *     tags: [Users]
  *     responses:
  *       200:
- *         description: Lista de usuarios
+ *         description: Lista de usuários
  */
 router.get('/', UserController.getAllUsers);
 
@@ -26,7 +26,7 @@ router.get('/', UserController.getAllUsers);
  * @swagger
  * /api/users/{id}:
  *   get:
- *     summary: Buscar usuario por ID
+ *     summary: Buscar usuário por ID
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -36,9 +36,9 @@ router.get('/', UserController.getAllUsers);
  *           type: integer
  *     responses:
  *       200:
- *         description: Usuario encontrado
+ *         description: usuário encontrado!
  *       404:
- *         description: Usuario não encontrado
+ *         description: usuário não encontrado!
  */
 router.get('/:id', UserController.getUserById);
 
@@ -46,7 +46,7 @@ router.get('/:id', UserController.getUserById);
  * @swagger
  * /api/users:
  *   post:
- *     summary: Cria um novo usuario
+ *     summary: Criar um novo usuário
  *     tags: [Users]
  *     requestBody:
  *       required: true
@@ -64,7 +64,7 @@ router.get('/:id', UserController.getUserById);
  *                 format: binary
  *     responses:
  *       201:
- *         description: Usuario criado
+ *         description: usuário criado!
  */
 router.post('/', upload.single("photo"), UserController.createUser);
 
@@ -72,7 +72,7 @@ router.post('/', upload.single("photo"), UserController.createUser);
  * @swagger
  * /api/users/{id}:
  *   delete:
- *     summary: Deleta um usuario
+ *     summary: Deleta um usuário
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -82,7 +82,7 @@ router.post('/', upload.single("photo"), UserController.createUser);
  *           type: integer
  *     responses:
  *       200:
- *         description: Usuario deletado
+ *         description: usuário deletado
  */
 router.delete('/:id', UserController.deleteUser);
 
@@ -90,7 +90,7 @@ router.delete('/:id', UserController.deleteUser);
  * @swagger
  * /api/users/{id}:
  *   put:
- *     summary: Atualiza um usuario
+ *     summary: Atualiza um usuário
  *     tags: [Users]
  *     parameters:
  *       - in: path
@@ -111,7 +111,7 @@ router.delete('/:id', UserController.deleteUser);
  *                 type: integer
  *     responses:
  *       200:
- *         description: Usuario atualizado
+ *         description: usuário atualizado
  */
 router.put('/:id', UserController.updateUser);
 
