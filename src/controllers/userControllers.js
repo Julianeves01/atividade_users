@@ -1,5 +1,7 @@
 const User = require("../models/User");
 const UserList = require("../models/UserList");
+const listaPosts=require('../../data/postListInstance');
+
 const lista = new UserList();
 
 //adicionando alguns usuários iniciais (teste)

@@ -11,8 +11,8 @@ const PORT = process.env.PORT || 4000;
 app.use(cors()); 
 app.use(express.json()); 
 
-app.use("/api", userRoutes);
-app.use("/api", postRoutes);
+app.use("/api/user", userRoutes);
+app.use("/api/posts", postRoutes);
 
 app.get("/", (req, res) => {
     res.send("ROTA TA FUNCIONANDO!!");
