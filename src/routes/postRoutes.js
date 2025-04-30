@@ -1,122 +1,134 @@
 const express = require('express');
 const router = express.Router();
-const postControllers = require("../controllers/postControllers");
+const updload = require('../config/upload');
+const PostController = require("../controllers/postController");
 const apiKeyMiddleware = require("../config/apiKey");
 router.use(apiKeyMiddleware);
 
 /**
-  * @swagger
-  * tags:
-  *   name: posts
-  *   description: Gerenciamento de posts
-  */
+ * @swagger
+ * tags:
+ *   name: Post
+ *   description: Gerenciamento de Post
+ */
 
 /**
-  * @swagger
-  * /api/post:
-  *   get:
-  *     summary: Lista todos os posts
-  *     tags: [posts]
-  *     parameters:
-  *       - in: query
-  *         name: name
-  *         schema:
-  *           type: string
-  *         description: Filtro por nome
-  */
-router.get('/', postControllers.getAllPosts);
+ * @swagger
+ * /api/Post:
+ *   get:
+ *     summary: Lista todos os posts
+ *     tags: [Post]
+ *     responses:
+ *       200:
+ *         description: Lista de Post
+ */
+router.get('/', PostController.getAllPost);
 
 /**
-  * @swagger
-  * /api/post/{id}:
-  *   get:
-  *     summary: Busca post por ID
-  *     tags: [posts]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         required: true
-  *         schema:
-  *           type: integer
-  *     responses:
-  *       200:
-  *         description: post encontrada
-  *       404:
-  *         description: post não encontrada
-  */
-router.get('/:id', postControllers.getPostById);
-
-
-/**
-  * @swagger
-  * /api/post:
-  *   post:
-  *     summary: Cria um novo post
-  *     tags: [posts]
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema:
-  *             type: object
-  *             properties:
-  *               name:
-  *                 type: string
-  *               founder:
-  *                 type: string
-  *     responses:
-  *       201:
-  *         description: post criado
-  */
-router.post('/', postControllers.addPost);
-
+ * @swagger
+ * /api/Post:
+ *   post:
+ *     summary: Cria um novo Post
+ *     tags: [Post]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               user_id:
+ *                 type: integer
+ *               photo:
+ *                 type: string
+ *                 format: binary
+ *     responses:
+ *       201:
+ *         description: Post criado com sucesso
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: integer
+ *                 name:
+ *                   type: string
+ *                 user_id:
+ *                   type: integer
+ *                 photo:
+ *                   type: string
+ */
+router.post('/', PostController.addPost);
 
 /**
-  * @swagger
-  * /api/post/{id}:
-  *   put:
-  *     summary: Atualiza uma post
-  *     tags: [posts]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         required: true
-  *         schema:
-  *           type: integer
-  *     requestBody:
-  *       required: true
-  *       content:
-  *         application/json:
-  *           schema:
-  *             type: object
-  *             properties:
-  *               name:
-  *                 type: string
-  *               founder:
-  *                 type: string
-  *     responses:
-  *       200:
-  *         description: post atualizado
-  */
-router.put('/:id', postControllers.updatePost);
+ * @swagger
+ * /api/Post/{id}:
+ *   get:
+ *     summary: Busca posts por ID
+ *     tags: [Post]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Post encontrado
+ *       404:
+ *         description: Post não encontrado
+ */
+router.get('/:id', PostController.getPostById);
 
 /**
-  * @swagger
-  * /api/post/{id}:
-  *   delete:
-  *     summary: Deleta um post
-  *     tags: [posts]
-  *     parameters:
-  *       - in: path
-  *         name: id
-  *         required: true
-  *         schema:
-  *           type: integer
-  *     responses:
-  *       200:
-  *         description: post deletado
-  */
-router.delete('/:id', postControllers.deletePost);
+ * @swagger
+ * /api/Post/{id}:
+ *   put:
+ *     summary: Atualiza um post
+ *     tags: [Post]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               user_id:
+ *                 type: integer
+ *     responses:
+ *       200:
+ *         description: Post atualizado
+ */
+router.put('/:id', PostController.updatePost);
+
+/**
+ * @swagger
+ * /api/Post/{id}:
+ *   delete:
+ *     summary: Deleta um Post
+ *     tags: [Post]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *     responses:
+ *       200:
+ *         description: Post deletado
+ */
+router.delete('/:id', PostController.deletePost);
 
 
 module.exports = router;
