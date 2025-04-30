@@ -3,17 +3,12 @@ const PostList = require("../models/PostList");
 const lista = new PostList();
 
 // Adicionando posts iniciais
-lista.addPost(new Post("25", 532, "Primeiro comentário", 100, ["imagem1.jpg"]));
-
-lista.addPost(new Post("88", 1000, "Segundo comentário", 200, ["imagem2.jpg", "imagem3.jpg"]));
-
-lista.addPost(new Post("66", 2000, "Terceiro comentário", 300, ["imagem4.jpg", "imagem5.jpg", "imagem6.jpg"]));
-
-lista.addPost(new Post("17", 3000, "Quarto comentário", 400, ["imagem7.jpg", "imagem8.jpg", "imagem9.jpg", "imagem10.jpg"]));
+const post1 = new Post("https://i.pinimg.com/736x/1b/24/cd/1b24cd5df88bbc197d1724554f268f7a.jpg", 532, "Primeiro comentário", 100, 2, 3);
+lista.addPost(post1);
 
 const router = {
-    getAllPosts: (req, res) => {
-        res.json(lista.getAllPosts());
+    getAllPost: (req, res) => {
+        res.json(lista.getAllPost());
     },
 
     getPostById: (req, res) => {
@@ -26,11 +21,11 @@ const router = {
 
     addPost: (req, res) => {
         try {
-            const { idUser, curtida, comentarios, compartilhamentos, imagens } = req.body;
-            if (!idUser || !curtida || !comentarios || !compartilhamentos || !imagens) {
+            const { imagem, likes, comentarios } = req.body;
+            if (!imagem || !likes === undefined|| comentarios === undefined) {
                 throw new Error("Campos obrigatórios não preenchidos");
             }
-            const newPost = new Post( idUser, curtida, comentarios, compartilhamentos, imagens);
+            const newPost = new Post( imagem, likes, comentarios);
             lista.addPost(newPost);
             res.status(201).json(newPost);
         } catch (error) {
@@ -40,7 +35,7 @@ const router = {
 
     updatePost: (req, res) => {
         try {
-            res.json(lista.updatePost(req.params.id, req.body));
+            res.status(200).json(lista.updatePost(req.params.id, req.body));
         } catch (error) {
             res.status(404).json({ message: "Erro ao atualizar o post", error: error.message });
         }

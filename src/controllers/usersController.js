@@ -1,6 +1,6 @@
 const User = require("../models/User");
 const UserList = require("../models/UserList");
-const listaPosts=require('../../data/postListInstance');
+const UserModel =require('../models/UserModel');
 
 const lista = new UserList();
 
@@ -23,11 +23,11 @@ const router = {
 
     addUser: (req, res) => {
         try {
-            const { name, email, age } = req.body;
-            if (!name || !email || age === undefined) {
+            const { nome, email, senha } = req.body;
+            if (!nome || !email || !senha === undefined) {
                 throw new Error("Todos os campos são obrigatórios");
             }
-            const newUser = new User(name, email, age);
+            const newUser = new User(nome, email, senha);
             lista.addUser(newUser);
             res.status(201).json(newUser);
         } catch (error) {
@@ -37,15 +37,24 @@ const router = {
 
     updateUser: (req, res) => {
         try {
-            res.json(lista.updateUser(req.params.id, req.body));
+            res.status(200).json(lista.updateUser(req.params.id, req.body));
         } catch (error) {
-            res.status(404).json({ message: "Erro ao atualizar o usuário", error });
+            res.status(400).json({ message: "Erro ao atualizar o usuário" });
         }
     },
 
     deleteUser: (req, res) => {
         lista.deleteUser(req.params.id);
         res.status(200).json({ message: "Usuário deletado com sucesso", IdDeletado: req.params.id });
+    },
+
+    getPostByUserId: (req, res) => {
+        try {
+            const userId = req.params.id;
+            res.status(200).json({ message: "Post encontrado com sucesso", IdDeletado: req.params.id });
+        } catch (error) {
+            res.status(404).json({ message: "Post não encontrado", error });
+        }
     }
 };
 
