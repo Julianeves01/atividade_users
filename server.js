@@ -1,27 +1,34 @@
-require("dotenv").config();
-
-const express = require("express");
-const cors = require("cors");
-const usersRoutes = require("./src/routes/usersRoutes");
-const postRoutes = require("./src/routes/postRoutes");
-const path = require("path");
+const express = require('express');
 const app = express();
 
-const setupSwaggerUI = require("./src/config/swagger");
-setupSwaggerUI(app);
+const swaggerUi = require('swagger-ui-express');
+const swaggerJsdoc = require('swagger-jsdoc');
 
+const options = {
+    definition: {
+        openapi: '3.0.0',
+        info: {
+            title: 'Atividade Users API',
+            version: '1.0.0',
+        },
+    },
+    apis: ['./src/routes/*.js'], 
+};
 
-app.use(cors());
-app.use(express.json());
-app.use("/api", usersRoutes);
-app.use("/api", postRoutes);
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
-app.use("/uploads", express.static(path.join(__dirname, "uploads")));
-app.use("/docs", express.static("docs"));
+const usersRoutes = require('./src/routes/usersRoutes');
+const authMiddleware = require('./src/middlewares/authMiddleware');
 
+// Middleware para autenticação
+app.use(authMiddleware);
+
+// Middleware para usar as rotas
+app.use('/api', usersRoutes);
+
+// Inicie o servidor
 const PORT = process.env.PORT || 3000;
-
-
 app.listen(PORT, () => {
-    console.log(` 🎀 Servidor rodando em http://localhost:${PORT}`);
+    console.log(` 🎀 Servidor rodando na porta ${PORT}`);
 });
