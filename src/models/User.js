@@ -1,11 +1,8 @@
-const { v4: uuid4 } = require('uuid');
-
     class User {
-        constructor(name, email,age){
-            this.id = uuid4();
-            this.name = name;
+        constructor(nome, email, senha){
+            this.nome = nome;
             this.email = email;
-            this.age = age;
+            this.senha = senha;
         }
     }
 

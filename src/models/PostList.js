@@ -5,13 +5,13 @@ class PostList {
     addPost(post) {
         this.posts.push(post);
     }
-    getAllPosts() {
+    getAllPost() {
         return this.posts;
     }
     getPostById(id) {
-        const post = this.posts.find(post => post.id === id);
+        const post = this.posts[id];
         if (!post) {
-            throw new Error(`post não encontrado`);
+            throw new Error(`Post não encontrado`);
         }
         return post;
     }
@@ -21,10 +21,9 @@ class PostList {
         return post;
     }
     deletePost(id) {
-        this.posts = this.posts.filter(post => post.id !== id);
-    }
-    getPostsByUserId(userId) {
-        return this.posts.filter(post => post.userId === userId);
+        const  post = this.getPostById(id);
+        this.posts.splice(id, 1); //remove o post da lista
+        return post; //retorna o post removido
     }
 }
 
