@@ -20,14 +20,18 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 const usersRoutes = require('./src/routes/usersRoutes');
 const authMiddleware = require('./src/middlewares/authMiddleware');
+const apiKeyMiddleware = require('./src/config/apiKey');
 
-// Middleware para autenticação
+
+app.use(apiKeyMiddleware);
+
+
 app.use(authMiddleware);
 
-// Middleware para usar as rotas
+
 app.use('/api', usersRoutes);
 
-// Inicie o servidor
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(` 🎀 Servidor rodando na porta ${PORT}`);
